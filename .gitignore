@@ -1,0 +1,26 @@
+# Sustainability project : STARS ratings data
+library(readxl)
+STARS_ratings_data <- read_excel("~/Documents/SUSTAINABILITY/STARS ratings data.xlsx", sheet = "STARS data")
+View(STARS_ratings_data)
+
+str(STARS_ratings_data)
+
+summary(STARS_ratings_data)
+
+STARS_ratings_data$Rating <- factor(STARS_ratings_data$Rating)
+
+fit <- lm(Sustainability_score ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + x12 + x13 + x14 + x15 + x16 + x17, data=STARS_ratings_data)
+summary(fit)
+
+plot(fit)
+
+attach(STARS_ratings_data)
+plot(Sustainability_score,x1) 
+abline(lm(x1~Sustainability_score), col='red')
+
+Overall_mean = mean(Sustainability_score); Overall_mean
+Group_means = aggregate(STARS_ratings_data[, 4:4], list(STARS_ratings_data$Rating), mean); Group_means
+
+counts <- table(STARS_ratings_data$Rating)
+barplot(counts, main="Rating Frequencies", xlab="Stars ratings", col='lightblue', ylim=c(0,140))
+
